@@ -35,6 +35,8 @@ export default function Login() {
     isSubmitting,
   } = useFormik({
     onSubmit: async (values, form) => {
+      firebase.auth().setPersistence(persistenceMode);
+
       try{
         const user = await firebase.auth().signInWithEmailAndPassword(values.email, values.password);
         console.log(user);
