@@ -24,11 +24,11 @@ export const SignOptionsComponent = (props) => {
 
 
         <Box p={4,2} mt={8} width="100%">
-        <Button width="100%" onClick={props.setSignChoice(true,false)}>Login</Button>
+        <Button width="100%" onClick={props.setHomeChoice(true,false)}>Login</Button>
         </Box>
 
         <Box p={4,2} width="100%">
-        <Button width="100%" onClick={props.setSignChoice(false,true)} colorScheme="green">Cadastrar-se</Button>
+        <Button width="100%" onClick={props.setHomeChoice(false,true)} colorScheme="green">Cadastrar-se</Button>
         </Box>
 
         </Container>

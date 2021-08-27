@@ -27,8 +27,29 @@ const validationSchema = yup.object().shape({
 
 export const LoginComponent = (props) => {
 
-  const goToHome = () => {
+  const goToSignup = () => {
+    props.setHomeChoice({login:false,signup:true})
+  }
+
+  const goToHome = (user) => {
      props.setHomeChoice({login:false,signup:false});
+     props.setAuth({loading:true});
+  }
+
+  const onAuthSubmit = (values, form) => {
+    signInOnSubmit(values, form);
+    goToHome();
+  }
+
+  const signInOnSubmit = async (values, form) => {
+      firebase.auth().setPersistence(persistenceMode);
+
+      try{
+        const user = await firebase.auth().signInWithEmailAndPassword(values.email, values.password);
+        console.log(user);
+      }catch(err){
+        console.log(err);
+      }
   }
 
   const {
@@ -40,18 +61,7 @@ export const LoginComponent = (props) => {
     handleSubmit,
     isSubmitting,
   } = useFormik({
-    onSubmit: async (values, form) => {
-      firebase.auth().setPersistence(persistenceMode);
-
-      try{
-        const user = await firebase.auth().signInWithEmailAndPassword(values.email, values.password);
-        console.log(user);
-      }catch(err){
-        console.log(err);
-      }finally {
-        goToHome();
-      }
-    },
+    onSubmit: (values, form) => onAuthSubmit(values, form),
     validationSchema,
     initialValues: {
       email: '',
@@ -85,7 +95,7 @@ export const LoginComponent = (props) => {
         <Button width="100%" onClick={handleSubmit} colorScheme="blue" isLoading={isSubmitting}>Entrar</Button>
       </Box>
 
-      <Link href="/signup">Ainda não tem uma conta ? Cadastre-se.</Link>
+      <a onClick={goToSignup}>Ainda não tem uma conta ? Cadastre-se.</a>
     </Container>
   )
 };

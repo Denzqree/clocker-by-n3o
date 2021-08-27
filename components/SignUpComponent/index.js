@@ -29,8 +29,13 @@ const validationSchema = yup.object().shape({
 
 export const SignUpComponent = (props) => {
 
+  //Deprecated
   const goToLogin = () => {
     props.setHomeChoice({login:true,signup:false});
+  }
+
+  const goToHome = () => {
+    props.setHomeChoice({login:false,signup:false});
   }
 
   const {
@@ -49,7 +54,7 @@ export const SignUpComponent = (props) => {
       } catch(err) {
         console.log(err);
       } finally {
-        goToLogin();
+        goToHome();
       }
     },
     validationSchema,
@@ -96,7 +101,7 @@ export const SignUpComponent = (props) => {
 
       
 
-      <Link href="/login">Já tem uma conta ? Acesse.</Link>
+      <a onClick={goToLogin}>Já tem uma conta ? Acesse.</a>
     </Container>
   )
 };

@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 
 import { AgendaComponent, LoginComponent, LogoComponent, SignUpComponent } from "../";
 
-import Link from 'next/link';
-
 import { 
     Container, 
     Spinner,
@@ -21,9 +19,9 @@ export const HomeComponent = (props) => {
         user: false
     });
 
-    const [HomeChoice, setHomeChoice] = useState({
-        login:false,
-        signup:false
+    const [homeChoice, setHomeChoice] = useState({
+        login:props.login || false,
+        signup:props.signup || false
     });
     
     const SignOptions = () => {
@@ -54,15 +52,28 @@ export const HomeComponent = (props) => {
     };
 
     useEffect(() => {
-        firebase.auth().onAuthStateChanged(user => {
-            setAuth({
-                loading: false,
-                user
-            })
+        const onLogin = firebase.auth().onAuthStateChanged(user => {
+            console.log('user state changed');
+                setAuth({
+                    loading: false,
+                    user: user
+                });
         });
+
+        return () => onLogin();
     }, []);
 
+    console.log('--------------render------------------');
+    console.log(auth);
+    console.log(homeChoice);
+    console.log('------------------------------------');
+
     if(auth.loading) {
+        console.log('------------------------------------');
+        console.log('Loading..');
+        console.log(auth);
+        console.log(homeChoice);
+        console.log('------------------------------------');
         return (
             <Container p={4} centerContent>
                 <Spinner />
@@ -71,24 +82,13 @@ export const HomeComponent = (props) => {
     }
 
 
-    if(HomeChoice.login){
-        return <LoginComponent setHomeChoice={setHomeChoice}/>;
+    if(homeChoice.login){
+        return <LoginComponent setAuth={setAuth} setHomeChoice={setHomeChoice}/>;
     }
 
-    if(HomeChoice.signup){
+    if(homeChoice.signup){
         return <SignUpComponent setHomeChoice={setHomeChoice}/>;
     }
-
-    if(HomeChoice.login || props.login) {
-        return <LoginComponent setHomeChoice={setHomeChoice}/>;
-    }
-
-    if(HomeChoice.signup || props.signup){
-        return <SignUpComponent setHomeChoice={setHomeChoice}/>;
-    }
-
-    // const authenticatedUser = firebase.auth().currentUser;
-    if(!HomeChoice.login && !HomeChoice.signup){
-        return auth.user ? <AgendaComponent /> : <SignOptions />;
-    }
+    
+    return auth.user ? <AgendaComponent /> : <SignOptions setHomeChoice={setHomeChoice} />;
 };
