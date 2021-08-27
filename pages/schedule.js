@@ -1,7 +1,5 @@
-export default function Schedule() {
-    return (
-      <div>
-        Schedule
-      </div>
-    )
-  }
+import { ScheduleComponent } from '../components/'
+
+export default function Schedule(){
+  return <ScheduleComponent />
+}

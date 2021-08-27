@@ -1,7 +1,5 @@
-export default function Agenda() {
-    return (
-      <div>
-        Agenda
-      </div>
-    )
-  }
+import { AgendaComponent } from '../components/'
+
+export default function Agenda(){
+  return <AgendaComponent />
+}

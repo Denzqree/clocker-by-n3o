@@ -1,35 +1,38 @@
-import Link from 'next/link';
+import { useEffect, useState } from "react";
+
+import { SignOptionsComponent, AgendaComponent } from "../components";
 
 import { 
-  Container, 
-  Box, 
-  Button, 
-  Text
-} from '@chakra-ui/react';
-
-import { Logo } from '../components/Logo';
+    Container, 
+    Spinner,
+  } from '@chakra-ui/react';
 
 import firebase from '../config/firebase';
 
 export default function Home() {
-  return (
-    <Container p={4} centerContent>
 
-      <Logo />
+    const [auth, setAuth] = useState({
+        loading: true,
+        user: false
+    });
 
-      <Box p={4} mt={8}>
-        <Text>Crie sua agenda compartilhada</Text>
-      </Box>
+    useEffect(() => {
+        firebase.auth().onAuthStateChanged(user => {
+            setAuth({
+                loading: false,
+                user
+            })
+        })
+    }, []);
 
+    if(auth.loading) {
+        return (
+            <Container p={4} centerContent>
+                <Spinner />
+            </Container>
+        )
+    }
 
-      <Box p={4,2} mt={8} width="100%">
-        <Link href="/login"><Button width="100%">Login</Button></Link>
-      </Box>
-
-      <Box p={4,2} width="100%">
-      <Link href="/signup"><Button width="100%" colorScheme="green">Cadastrar-se</Button></Link>
-      </Box>
-
-    </Container>
-  )
+    // const authenticatedUser = firebase.auth().currentUser;
+    return auth.user ? <AgendaComponent /> : <SignOptionsComponent />;
 };
