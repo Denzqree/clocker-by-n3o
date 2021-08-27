@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { useEffect, useState } from "react";
 
 import { AgendaComponent, LoginComponent, LogoComponent, SignUpComponent } from "../";
@@ -30,7 +32,7 @@ export const HomeComponent = (props) => {
         
             <Container p={4} centerContent>
         
-                <a href="/"><LogoComponent /></a>
+                <Link href="./"><a><LogoComponent /></a></Link>
         
                 <Box p={4} mt={8}>
                 <Text>Crie sua agenda compartilhada</Text>

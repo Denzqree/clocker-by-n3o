@@ -67,7 +67,7 @@ export const SignUpComponent = (props) => {
   return (
     <Container p={4} centerContent>
 
-      <a href="/"><LogoComponent /></a>
+      <Link href="./"><a><LogoComponent /></a></Link>
 
       <Box p={4} mt={8}>
         <Text>Crie sua agenda compartilhada</Text>
