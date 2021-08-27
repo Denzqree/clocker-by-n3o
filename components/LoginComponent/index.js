@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 
 import { 
-  Container, 
+  Container,
   Box, 
   Input, 
   Button, 
@@ -19,12 +19,18 @@ import { LogoComponent } from '../LogoComponent';
 
 import firebase, { persistenceMode } from '../../config/firebase';
 
+
 const validationSchema = yup.object().shape({
   email: yup.string().email('Email inválido').required('Preenchimento obrigatório'),
   password: yup.string().required('Preenchimento obrigatório'),
 });
 
-export const LoginComponent = () => {
+export const LoginComponent = (props) => {
+
+  const goToHome = () => {
+     props.setHomeChoice({login:false,signup:false});
+  }
+
   const {
     values, 
     errors, 
@@ -42,6 +48,8 @@ export const LoginComponent = () => {
         console.log(user);
       }catch(err){
         console.log(err);
+      }finally {
+        goToHome();
       }
     },
     validationSchema,
@@ -53,7 +61,7 @@ export const LoginComponent = () => {
   return (
     <Container p={4} centerContent>
 
-      <LogoComponent />
+      <a href="/"><LogoComponent /></a>
 
       <Box p={4} mt={8}>
         <Text>Crie sua agenda compartilhada</Text>

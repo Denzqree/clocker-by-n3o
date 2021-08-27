@@ -1,5 +1,5 @@
-import { SignUpComponent } from '../components/'
+import { HomeComponent } from '../components/'
 
 export default function SignUp(){
-  return <SignUpComponent />
+  return <HomeComponent signup/>
 }

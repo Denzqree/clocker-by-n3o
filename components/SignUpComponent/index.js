@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 
 import { 
-  Container, 
+  Container,
   Box, 
   Input, 
   Button, 
@@ -27,7 +27,12 @@ const validationSchema = yup.object().shape({
   username: yup.string().required('Preenchimento obrigatório'), //Pode/deve se verificar se o usuario ja esta cadastrado
 });
 
-export const SignUpComponent = () => {
+export const SignUpComponent = (props) => {
+
+  const goToLogin = () => {
+    props.setHomeChoice({login:true,signup:false});
+  }
+
   const {
     values, 
     errors, 
@@ -41,8 +46,10 @@ export const SignUpComponent = () => {
       try{
         const user = await firebase.auth().createUserWithEmailAndPassword(values.email, values.password);
         console.log(user);
-      }catch(err){
+      } catch(err) {
         console.log(err);
+      } finally {
+        goToLogin();
       }
     },
     validationSchema,
@@ -55,7 +62,7 @@ export const SignUpComponent = () => {
   return (
     <Container p={4} centerContent>
 
-      <LogoComponent />
+      <a href="/"><LogoComponent /></a>
 
       <Box p={4} mt={8}>
         <Text>Crie sua agenda compartilhada</Text>

@@ -1,7 +1,7 @@
 import Link from 'next/link';
     
 import { 
-    Container, 
+    Container,
     Box, 
     Button, 
     Text, 
@@ -10,13 +10,13 @@ import {
   
 import { LogoComponent } from '../LogoComponent';
 
-export const SignOptionsComponent = () => {
+export const SignOptionsComponent = (props) => {
 
     return (
             
         <Container p={4} centerContent>
 
-        <LogoComponent />
+        <a href="/"><LogoComponent /></a>
 
         <Box p={4} mt={8}>
         <Text>Crie sua agenda compartilhada</Text>
@@ -24,11 +24,11 @@ export const SignOptionsComponent = () => {
 
 
         <Box p={4,2} mt={8} width="100%">
-        <Link href="/login"><Button width="100%">Login</Button></Link>
+        <Button width="100%" onClick={props.setSignChoice(true,false)}>Login</Button>
         </Box>
 
         <Box p={4,2} width="100%">
-        <Link href="/signup"><Button width="100%" colorScheme="green">Cadastrar-se</Button></Link>
+        <Button width="100%" onClick={props.setSignChoice(false,true)} colorScheme="green">Cadastrar-se</Button>
         </Box>
 
         </Container>
